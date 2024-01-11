@@ -6,21 +6,18 @@
 # URL
 
 # -----------------------------
-# A Christmas Present
+# A
 
-# b, g = map(int, input().split())
-# result = 'Bat'
-# if b < g:
-#     result = 'Glove'
-# print(result)
-
+n, q = map(int, input().split())
+n = int(input())
+s = list(map(int, input().split()))
 
 # -----------------------------
-# B Christmas Trees
+# B
 
-a, m, l, r = map(int, input().split())
-result = (l-r+1) % m
-tmp = a % m
+# n, q = map(int, input().split())
+# n = int(input())
+# s = list(map(int, input().split()))
 
 
 # -----------------------------
