@@ -67,51 +67,116 @@
 # -----------------------------
 # D Tile Pattern  AC 1_4, WA 1_3, TEL 0_9
 
+# n, q = map(int, input().split())
+# p_ll = []
+# query_ll = []
+# black = 0
+# for i in range(n):
+#     p_ll.append(input())
+#     for p in p_ll[i]:
+#         if p == 'B':
+#             black += 1
+# result = []
+# for _ in range(q):
+#     query_l = list(map(int, input().split()))
+
+#     height = query_l[2]-query_l[0] + 1
+#     width = query_l[3]-query_l[1] + 1
+
+#     count = 0
+#     count += (width//n) * (height//n) * black
+#     print('h, w, nn :', height, width, count)
+
+#     count_1 = 0
+#     count_2 = 0
+#     for x in range(query_l[3] - (width % n - 1), query_l[3]+1):
+#         for y in range(n):
+#             if p_ll[x % n][y] == 'B':
+#                 count_1 += 1
+#         for y in range(query_l[2] - (height % n - 1), query_l[2]+1):
+#             if p_ll[x % n][y % n] == 'B':
+#                 count_2 += 1
+#     count = count + count_1*(height//n) + count_2
+#     print('right:', count_1*(height//n) + count_2)
+
+#     count_1 = 0
+#     for x in range(n):
+#         for y in range(query_l[2] - (height % n - 1), query_l[2]+1):
+#             if p_ll[x][y % n] == 'B':
+#                 count_1 += 1
+#     count += count_1 * (width//n)
+#     print('under:', count_1 * (width//n))
+#     print('result:', count)
+#     result.append(count)
+
+# for r in result:
+#     print(r)
+
+# 2024/03/21 解答参考  何か間違えている
+def count_square(black, dp, x, y):
+    w = x+1
+    h = y+1
+    w_count = w // n
+    w_rest = w % n
+    h_count = h // n
+    h_rest = h % n
+
+    a = black * w_count * h_count
+
+    b = 0
+    if w_rest != 0:
+        b_rest = dp[n-1][w_rest-1]
+        b = h_count * b_rest
+
+    c = 0
+    if h_rest != 0:
+        c_rest = dp[h_rest-1][n-1]
+        c = w_count * c_rest
+
+    d = 0
+    if w_rest != 0 and h_rest != 0:
+        d = dp[h_rest-1][w_rest-1]
+
+    count = a+b+c+d
+
+    return count
+
+
 n, q = map(int, input().split())
 p_ll = []
 query_ll = []
 black = 0
+dp = [[0]*n for _ in range(n)]
 for i in range(n):
     p_ll.append(input())
-    for p in p_ll[i]:
-        if p == 'B':
-            black += 1
-result = []
+    for j, p in enumerate(p_ll[i]):
+        b_w = 1 if p == 'B' else 0
+        black += b_w
+        pre_i = dp[i-1][j] if i > 0 else 0
+        pre_j = dp[i][j-1] if j > 0 else 0
+        pre_ij = dp[i-1][j-1] if i > 0 and j > 0 else 0
+        dp[i][j] = pre_i + pre_j - pre_ij + b_w
+
+results = []
 for _ in range(q):
-    query_l = list(map(int, input().split()))
+    a, b, c, d = map(int, input().split())
+    if a == 0 and b == 0:
+        ans = count_square(black, dp, c, d)
+    elif a == 0:
+        ans = count_square(black, dp, c, d) - \
+            count_square(black, dp, c, b-1)
+    elif b == 0:
+        ans = count_square(black, dp, c, d) - \
+            count_square(black, dp, a-1, d)
+    else:
+        ans = count_square(black, dp, c, d) - count_square(black, dp, c, b-1) - \
+            count_square(black, dp, a-1, d) + \
+            count_square(black, dp, a-1, b-1)
 
-    height = query_l[2]-query_l[0] + 1
-    width = query_l[3]-query_l[1] + 1
-
-    count = 0
-    count += (width//n) * (height//n) * black
-    print('h, w, nn :', height, width, count)
-
-    count_1 = 0
-    count_2 = 0
-    for x in range(query_l[3] - (width % n - 1), query_l[3]+1):
-        for y in range(n):
-            if p_ll[x % n][y] == 'B':
-                count_1 += 1
-        for y in range(query_l[2] - (height % n - 1), query_l[2]+1):
-            if p_ll[x % n][y % n] == 'B':
-                count_2 += 1
-    count = count + count_1*(height//n) + count_2
-    print('right:', count_1*(height//n) + count_2)
-
-    count_1 = 0
-    for x in range(n):
-        for y in range(query_l[2] - (height % n - 1), query_l[2]+1):
-            if p_ll[x][y % n] == 'B':
-                count_1 += 1
-    count += count_1 * (width//n)
-    print('under:', count_1 * (width//n))
-    print('result:', count)
-    result.append(count)
-
-for r in result:
-    print(r)
-
+    results.append(ans)
+for res in results:
+    print(res)
+print(black)
 
 # -----------------------------
 # E Set Meal

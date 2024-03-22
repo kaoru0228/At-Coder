@@ -48,8 +48,38 @@ import numpy as py
 # a <<= 2
 # print(a)
 
+# 排他的論理和 -----------------
+# a = 63  # 111111
+# b = 21  # 010101
+# print(a ^ b)
+# print(bin(a ^ b)[2:])
+# print(type(bin(a ^ b)[2:]))
 
-# ---------------------------
-# ---------------------------
+
+# DataFrame型 -----------------
+# import pandas as pd
+
+# data = {'ID': [1, 2], 'Name': ['Alice', 'Bob']}
+# df = pd.DataFrame(data)
+# print(df)
+# print(df['ID'][0])
+# print(df.iloc[0])
+# print(df.columns)
+# print(df.shape)
+
+# リストの初期化 -----------------
+# a = [[] for _ in range(10)]
+# a[0].append(1)
+# print(a)
+
+# for文 printされない---------------------------
+# for i in range(0, 0, -1):
+#     print(i)
+
+
+# 　range ---------------------------
+for a in range(-3, 3, 1):
+    print(a)
+
 # ---------------------------
 # ---------------------------
