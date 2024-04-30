@@ -46,7 +46,7 @@ int bfs(const vector<string> &grid, int start_i, int start_j, int H, int W, vect
             int ni = ci + dx[d], nj = cj + dy[d];
             if (ni >= 0 && ni < H && nj >= 0 && nj < W && visited.find({ni, nj}) == visited.end() && grid[ni][nj] == '.')
             {
-                if (confirmed[ni][nj] > 0 && is_free(grid, ni, nj, H, W))
+                if (confirmed[ni][nj] > 1)
                 {
                     return confirmed[ni][nj];
                 }
