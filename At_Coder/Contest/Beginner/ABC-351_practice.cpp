@@ -181,7 +181,7 @@ int main()
             if (is_fold(S, i, j, H, W))
             {
                 degree = 1;
-                value[i][j] = 1;
+                // value[i][j] = 1;
                 maxdegree = max(maxdegree, degree);
             }
             else
