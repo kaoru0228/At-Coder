@@ -1,3 +1,6 @@
+// g++ -o test file_name.cpp
+// test
+
 #include <iostream>
 #include <vector>
 #include <queue>
